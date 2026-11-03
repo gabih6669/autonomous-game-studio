@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0f1717" />
+  <meta name="description" content="The Last Light — a fictional top-down artillery command game of trench warfare, radio calls, and uncertain victories." />
+  <title>The Last Light | Artillery Command</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%20shape-rendering%3D%22crispEdges%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20fill%3D%22%2317221d%22%2F%3E%3Cpath%20d%3D%22M32%204%2058%2016v18Q54%2049%2032%2061%2010%2049%206%2034V16Z%22%20fill%3D%22%23b79b68%22%2F%3E%3Cpath%20d%3D%22M32%2010%2051%2020v14Q47%2044%2032%2054%2017%2044%2013%2034V20Z%22%20fill%3D%22%23273629%22%2F%3E%3Cpath%20d%3D%22M28%2014h8v36h-8zM14%2029h36v8H14z%22%20fill%3D%22%23c6ad79%22%2F%3E%3Crect%20x%3D%2229%22%20y%3D%2227%22%20width%3D%226%22%20height%3D%2212%22%20fill%3D%22%23f2dfb6%22%2F%3E%3C%2Fsvg%3E%0A" type="image/svg+xml" />
+  <style>:root{color-scheme:dark;--bg:#101717;--panel:#192321;--panel2:#222e2b;--line:#3a4640;--muted:#98a59b;--text:#e7e6d7;--cream:#d8d0b5;--gold:#e1ae68;--ally:#9eb58c;--enemy:#c87e70;--smoke:#bbc7bc;--shadow:#0b0f0e}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font:13px/1.5 'Trebuchet MS',Arial,sans-serif;background:radial-gradient(ellipse at 50% -200px,#2e3730 0%,#111918 52%,#0d1313 100%);color:var(--text)}button{font:inherit;cursor:pointer}button:disabled{cursor:not-allowed;opacity:.43}button:focus-visible,[tabindex]:focus-visible{outline:2px solid #f7ce84;outline-offset:3px}.app-shell{max-width:1800px;padding:20px 28px 18px;margin:auto}.topbar{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding:0 0 17px;gap:18px}.brand{display:flex;gap:13px;align-items:center}.brand-mark{font-size:38px;color:var(--gold);line-height:1}.eyebrow{font-size:9px;letter-spacing:2px;font-weight:800;color:var(--gold);text-transform:uppercase}.brand h1{font-size:26px;line-height:1;letter-spacing:3px;margin:5px 0 0;color:#e7e4d4}.brand h1 em{font-style:normal;color:var(--gold)}.top-meta{display:flex;align-items:center;gap:15px;font-size:10px;letter-spacing:1.1px;font-weight:bold;color:#b3baae}.top-meta b{color:var(--text)}.live-dot{width:7px;height:7px;border-radius:50%;background:#a9c29c;box-shadow:0 0 10px #a9c29c}.meta-divider{height:21px;border-left:1px solid var(--line)}.small{border-radius:3px;padding:9px 13px;font-size:10px;letter-spacing:1px;font-weight:800}.ghost{background:transparent;border:1px solid transparent;color:var(--cream)}.outline{color:var(--cream);background:#26312c;border:1px solid #47544c}.outline:hover,.ghost:hover{border-color:var(--gold);color:var(--gold)}.statusbar{display:flex;align-items:center;gap:22px;padding:16px 0}.status-stat{min-width:100px;flex:1;display:flex;flex-direction:column;gap:3px}.stat-label{font-size:9px;font-weight:800;letter-spacing:1.35px;color:#8d9e92}.status-stat strong{font-size:15px;letter-spacing:1px;color:#e1e5d9;line-height:1.2}.status-stat:first-child strong{color:var(--gold);font-size:22px;font-family:Georgia,serif}.thin-meter{background:#0b1211;height:3px;width:90%;margin-top:3px}.thin-meter span{display:block;height:100%;transition:width .3s}.ally-fill{background:var(--ally)}.enemy-fill{background:var(--enemy)}.warroom{display:grid;grid-template-columns:254px minmax(0,1fr) 262px;gap:13px;align-items:stretch}.panel{background:linear-gradient(155deg,#202b27,#17211f);border:1px solid #344039;padding:17px;min-width:0}.panel-heading{display:flex;align-items:center;justify-content:space-between;gap:7px;padding-bottom:13px;border-bottom:1px solid var(--line)}h2{font-size:14px;letter-spacing:1.6px;margin:5px 0 0;font-weight:900}.signal-icon,.brass-stamp{color:var(--gold);font-size:21px}.panel-note{font-size:11px;line-height:1.65;color:#a3b0a4;margin:14px 0}.request-stack{min-height:145px;display:flex;flex-direction:column;gap:9px}.empty-state{font-size:11px;padding:18px 12px;text-align:center;border:1px dashed #475049;color:#8d9b91}.request{background:#28322c;border:1px solid #586253;padding:11px;text-align:left;color:var(--text);width:100%;transition:background .2s,border-color .2s}.request:hover,.request.selected{background:#354038;border-color:var(--gold)}.request.selected{box-shadow:inset 3px 0 var(--gold)}.request-title{display:flex;align-items:center;justify-content:space-between;color:var(--gold);font-size:10px;font-weight:900;letter-spacing:1px}.request-ttl{color:#e1b998;font-size:11px}.request p{margin:7px 0;font-size:12px;line-height:1.4;color:#e3e6dc}.request small{font-size:9px;letter-spacing:.8px;color:#a4b6a6}.request-timer{height:3px;background:#131d1a;margin-top:8px}.request-timer span{display:block;background:#cba06c;height:100%}.feed-heading{margin-top:22px}.log-stack{padding:6px 0;max-height:303px;overflow:auto;min-height:183px}.log-entry{border-bottom:1px solid #344139;padding:9px 0;font-size:11px;line-height:1.45;color:#c0c9ba}.log-entry .log-time{display:inline-block;color:#75887e;font-size:9px;letter-spacing:.5px;margin-right:7px}.log-entry.success{color:#b1caa4}.log-entry.danger{color:#e2a394}.log-entry.order{color:#dbc28c}.legend-card{padding:14px 12px;margin-top:16px;border:1px solid #414a41;background:#1b2621}.legend-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px 5px;margin-top:12px}.legend-grid span{font-size:9px;color:#aeb9ac}.legend-swatch{display:inline-block;width:8px;height:8px;margin-right:6px;background:#aaa}.legend-swatch.ally{background:#a1bf93}.legend-swatch.enemy{background:#b8796b}.legend-swatch.smoke{background:#c8d4c9}.legend-swatch.target{background:#e3b063}.battle-column{min-width:0}.field-heading{padding:15px 18px;height:70px;display:flex;align-items:center;justify-content:space-between;background:#1d2724;border:1px solid #344039;border-bottom:0}.field-heading h2{font-size:16px;margin:3px 0 0}.field-controls{display:flex;gap:16px;align-items:center}.field-live,.coord-label{font-size:9px;letter-spacing:1.2px;color:#9ba99b}.field-live i{display:inline-block;background:#b1cfa5;width:6px;height:6px;border-radius:50%;margin-right:5px}.map-frame{position:relative;border:7px solid #303b33;background:#53644d;overflow:hidden;box-shadow:inset 0 0 35px #0007}.map-frame canvas{display:block;width:100%;height:auto;aspect-ratio:8/5;image-rendering:pixelated;cursor:crosshair;touch-action:manipulation}.map-overlay-top{pointer-events:none;position:absolute;left:12px;right:12px;top:12px;display:flex;justify-content:space-between;font-size:9px;letter-spacing:1.8px;font-weight:800;color:#f4edd5cf;text-shadow:0 1px 4px #000}.map-compass{position:absolute;right:18px;bottom:17px;font-size:10px;font-weight:900;color:#e6e3c9;text-shadow:0 1px 4px #000;display:flex;align-items:center;flex-direction:column;line-height:1.2;pointer-events:none}.map-compass span{font-size:29px}.map-corner{position:absolute;left:10px;bottom:8px;color:#efe8ccad;font-size:8px;letter-spacing:1.5px;pointer-events:none}.map-toolbar{background:#262f29;border:1px solid #3c483d;border-top:0;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px;font-size:9px;letter-spacing:1px;color:#a8b3a5}.map-toolbar b{color:#d5dacb}.target-dot{font-size:17px;color:var(--gold);vertical-align:middle}.map-toolbar #targetLabel{color:var(--gold);margin-left:7px}.kbd{border:1px solid #657267;padding:2px 5px;margin-left:6px;font-size:9px;color:#d2dacb}.mission-bottom{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:13px;background:#1b2623;border:1px solid #36423c;padding:15px 18px}.mission-brief p{margin:5px 0 0;color:#c1c9b9;font-size:11px;max-width:500px}.casualty-counter{display:flex;flex-direction:column;gap:4px;white-space:nowrap;font-size:9px;letter-spacing:1px;color:#8f9f94}.casualty-counter b{color:#dfe7d9}.section-label{font-size:10px;letter-spacing:1.1px;color:#b5a682;font-weight:900;margin:19px 0 10px}.gun-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.gun{border:1px solid #566054;background:#2a352d;color:#d9dfd3;padding:10px 2px 7px;min-width:0;text-align:center}.gun:hover,.gun.selected{border-color:var(--gold);background:#41483a}.gun.selected{box-shadow:inset 0 -3px var(--gold)}.gun-icon{display:block;font-size:15px;line-height:1}.gun small{display:block;font-size:8px;margin-top:6px;color:#a8bca9;letter-spacing:.6px}.gun-bar{height:2px;background:#17231c;margin-top:7px;overflow:hidden}.gun-bar span{height:100%;display:block;background:#c8ae7e}.shell-stack{display:flex;flex-direction:column;gap:6px}.shell{display:flex;text-align:left;align-items:center;gap:10px;background:#27312a;border:1px solid #3f4c40;color:var(--text);padding:8px;min-height:57px}.shell:hover,.shell.selected{border-color:var(--gold);background:#394239}.shell.selected{box-shadow:inset 3px 0 var(--gold)}.shell-glyph{border:1px solid #586254;border-radius:50%;min-width:34px;height:34px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:16px}.shell-name{display:block;font-weight:900;font-size:11px;letter-spacing:.5px}.shell-desc{display:block;color:#97a697;font-size:9px}.shell-count{margin-left:auto;color:#f0d4a7;font-size:15px;font-weight:900}.fire-solution{border:1px solid #475247;background:#202a24;display:grid;grid-template-columns:1fr 1fr;padding:10px;gap:10px}.fire-solution span{font-size:8px;color:#9aa999;letter-spacing:1.2px;display:block}.fire-solution b{font-size:10px;color:#f3d19c;letter-spacing:.5px}.fire-button{width:100%;border:1px solid #ffc17b;background:linear-gradient(180deg,#d5a060,#aa7443);color:#1c211b;padding:15px 8px;letter-spacing:2px;font-weight:1000;font-size:16px;margin-top:13px;box-shadow:inset 0 1px #fff5;transition:filter .2s}.fire-button:hover:not(:disabled){filter:brightness(1.12)}.fire-button span{font-size:20px;margin-right:5px}.fire-button small{font-size:10px;letter-spacing:0;opacity:.8}.fire-feedback{min-height:36px;text-align:center;color:#a9b4a8;font-size:10px;padding:9px 0}.quick-keys{border-top:1px solid #475146;padding-top:13px;display:flex;flex-direction:column;gap:8px;font-size:9px;letter-spacing:.7px;color:#b1bbaa}.quick-keys b{color:#e7c38d;margin-right:9px}.battery-note{padding:15px 13px;background:#30372b;border-left:3px solid #9b9667;margin-top:21px}.battery-note span{font-size:9px;font-weight:900;letter-spacing:1.5px;color:#dec393}.battery-note p{font-size:11px;line-height:1.55;margin:8px 0 0;color:#b2bcae}.campaign-panel{margin-top:17px;border:1px solid #3a453c;padding:18px 22px;background:#19231f}.campaign-heading,.upgrades-head{display:flex;align-items:center;justify-content:space-between;gap:14px}.campaign-metrics{display:flex;gap:20px;font-size:10px;letter-spacing:1px;color:#9cab9a}.campaign-metrics b{color:#e1c491;margin-left:5px;font-size:13px}.campaign-map{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:16px}.campaign-sector{border:1px solid #485147;background:#2b342b;min-height:89px;padding:11px 9px;position:relative;overflow:hidden}.campaign-sector.current{border-color:var(--gold);background:#343a2d}.campaign-sector small{font-size:8px;letter-spacing:1px;color:#a5b29e}.campaign-sector strong{display:block;margin-top:8px;font-size:10px;letter-spacing:.8px}.campaign-sector .sector-tide{margin-top:10px;background:#643b34;height:5px}.sector-tide span{display:block;background:#aebd98;height:100%}.campaign-sector .sector-pos{font-size:8px;color:#d4b17b;margin-top:5px}.upgrades-head{border-top:1px solid #3c483e;padding-top:17px;margin-top:20px}.upgrades-head>span{font-size:9px;color:#9dab9d;letter-spacing:1px}.upgrade-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:14px}.upgrade{border:1px solid #435044;background:#27332a;padding:14px 11px;display:flex;flex-direction:column;gap:8px}.upgrade-title{font-size:11px;letter-spacing:.4px;font-weight:900;color:#e3dfc7}.upgrade p{font-size:10px;color:#a4b1a4;min-height:44px;margin:0}.upgrade-stars{color:var(--gold);letter-spacing:3px;font-size:12px}.upgrade button{margin-top:auto;background:#b79a65;border:1px solid #d9bd85;color:#19231f;padding:9px 5px;font-weight:900;font-size:10px;letter-spacing:.4px}.upgrade button:disabled{opacity:.45}.save-row{display:flex;align-items:center;justify-content:space-between;margin-top:18px;border-top:1px solid #3a453c;padding-top:13px;gap:10px}.save-row>span{color:#a9c1a6;letter-spacing:1px;font-size:9px}.save-row>div{display:flex;gap:7px}footer{color:#667970;font-size:9px;letter-spacing:1.6px;padding:21px 0 4px;text-align:center}footer span{color:#b99c6c;padding:0 9px}.overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:25px;background:#090f0edb;z-index:10;backdrop-filter:blur(7px)}.overlay.open{display:flex}.overlay-card{position:relative;background:#202b24;border:1px solid #988c68;box-shadow:0 40px 120px #000d,inset 0 0 0 7px #253129;padding:37px 40px 30px;text-align:center;max-width:610px;width:100%;max-height:90vh;overflow:auto}.overlay-card:before,.overlay-card:after{content:'✦';position:absolute;top:16px;color:#927d53;font-size:13px}.overlay-card:before{left:21px}.overlay-card:after{right:21px}.overlay-ornament{font-size:35px;color:var(--gold);margin-top:11px}.overlay-card h2{font-family:Georgia,serif;font-size:37px;letter-spacing:5px;color:#efebd3;font-weight:normal;margin:6px 0}.overlay-card>p{font-size:13px;color:#c2c5b7;margin:4px 0 20px}.overlay-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:22px 0}.overlay-grid>div{border:1px solid #485347;padding:14px 6px;background:#2c372e}.overlay-grid b{display:block;color:var(--gold);font-size:18px}.overlay-grid span{font-size:9px;color:#afbcac;letter-spacing:1px}.report-note{border-top:1px solid #485248;text-align:left;padding:8px 1px;font-size:11px;color:#bec8b8}.report-note:before{content:'◈ ';color:var(--gold)}.overlay-action{max-width:360px;margin-top:17px}.overlay-foot{margin-top:20px;font-size:8px;letter-spacing:1.4px;color:#869489}.narrow{font-size:11px;line-height:1.7;color:#bec7b8}.focus{color:#e7c48e;font-weight:bold}.hint{background:#27372e;padding:10px;color:#b3c4ae;border-left:2px solid var(--gold);margin:11px 0}.danger-text{color:#d9a198}.success-text{color:#b7d0a8}@media(max-width:1430px){.app-shell{padding:12px}.warroom{grid-template-columns:218px minmax(0,1fr) 226px;gap:8px}.panel{padding:12px}.statusbar{gap:12px}.map-toolbar{font-size:8px}.campaign-sector strong{font-size:9px}.campaign-panel{padding:13px}}@media(max-width:1060px){.warroom{grid-template-columns:minmax(0,1fr) 255px}.panel-left{grid-column:1/3;grid-row:2;display:grid;grid-template-columns:1fr 1fr;gap:0 15px}.panel-left>.panel-heading:first-child,.panel-left>.panel-note,.panel-left>.request-stack{grid-column:1}.panel-left>.feed-heading,.panel-left>.log-stack,.panel-left>.legend-card{grid-column:2}.panel-left>.feed-heading{grid-row:1}.panel-left>.log-stack{grid-row:2/4}.panel-left>.legend-card{grid-row:4}.battle-column{grid-column:1}.panel-right{grid-column:2}.campaign-map{grid-template-columns:repeat(4,1fr)}.upgrade-grid{grid-template-columns:repeat(3,1fr)}.top-meta{flex-wrap:wrap;justify-content:flex-end}.statusbar{flex-wrap:wrap}.status-stat{min-width:75px}}@media(max-width:720px){.app-shell{padding:8px}.topbar{padding:10px 2px;align-items:flex-start}.brand h1{font-size:20px}.brand-mark{font-size:25px}.top-meta{font-size:9px;gap:7px}.meta-divider{display:none}.warroom{display:flex;flex-direction:column}.battle-column{order:1}.panel-right{order:2}.panel-left{order:3;display:block}.map-toolbar{flex-wrap:wrap;justify-content:center}.mission-bottom{flex-direction:column;align-items:flex-start}.casualty-counter{flex-direction:row;gap:15px}.field-heading{padding:10px;height:58px}.field-heading h2{font-size:13px}.field-controls{flex-direction:column;gap:1px}.campaign-map{grid-template-columns:repeat(2,1fr)}.upgrade-grid{grid-template-columns:repeat(2,1fr)}.campaign-heading,.upgrades-head{align-items:flex-start;flex-direction:column}.campaign-metrics{gap:8px;flex-wrap:wrap}.overlay-card{padding:25px 18px}.overlay-card h2{font-size:28px}.overlay-grid{grid-template-columns:1fr 1fr}.save-row{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">✦</span><div><div class="eyebrow">FIELD COMMAND · 1917 / FICTIONAL THEATER</div><h1>THE LAST <em>LIGHT</em></h1></div></div>
+      <div class="top-meta"><span class="live-dot"></span><span id="sectorLabel">BLACK COPPICE</span><span class="meta-divider"></span><span>CAMPAIGN DAY <b id="dayLabel">01</b></span><button id="soundBtn" class="small ghost" title="Toggle sound" aria-label="Toggle sound">♫ ON</button></div>
+    </header>
+    <div class="statusbar">
+      <div class="status-stat"><span class="stat-label">MISSION TIME</span><strong id="timeLabel">02:12</strong></div>
+      <div class="status-stat"><span class="stat-label">ALLIED MORALE</span><strong id="allyLabel">78%</strong><div class="thin-meter"><span id="allyFill" class="ally-fill" style="width:78%"></span></div></div>
+      <div class="status-stat"><span class="stat-label">ENEMY MORALE</span><strong id="enemyLabel">80%</strong><div class="thin-meter"><span id="enemyFill" class="enemy-fill" style="width:80%"></span></div></div>
+      <div class="status-stat"><span class="stat-label">FRONTLINE</span><strong id="frontLabel">CONTESTED</strong></div>
+      <div class="status-stat"><span class="stat-label">CONDITIONS</span><strong id="weatherLabel">—</strong></div>
+      <button id="pauseBtn" class="small outline">Ⅱ PAUSE</button>
+      <button id="speedBtn" class="small outline" title="Cycle simulation speed">1× SPEED</button>
+    </div>
+    <main class="warroom">
+      <aside class="panel panel-left">
+        <div class="panel-heading"><div><div class="eyebrow">SIGNAL OFFICE</div><h2>FRONTLINE RADIO</h2></div><span class="signal-icon">◉</span></div>
+        <div class="panel-note">Select a signal to mark its requested target. Answer with the matching shell type before the call expires.</div>
+        <div id="requests" class="request-stack"><div class="empty-state">No urgent calls on the line.</div></div>
+        <div class="panel-heading feed-heading"><div><div class="eyebrow">LIVE TRAFFIC</div><h2>DISPATCH LOG</h2></div></div>
+        <div id="radioLog" class="log-stack" aria-live="polite"></div>
+        <div class="legend-card"><div class="eyebrow">MAP LEGEND</div><div class="legend-grid"><span><i class="legend-swatch ally"></i> Allied units</span><span><i class="legend-swatch enemy"></i> Enemy units</span><span><i class="legend-swatch smoke"></i> Smoke screen</span><span><i class="legend-swatch target"></i> Fire request</span></div></div>
+      </aside>
+      <section class="battle-column">
+        <div class="field-heading"><div><span class="eyebrow">TACTICAL OVERVIEW</span><h2>SECTOR <span id="fieldSector">BLACK COPPICE</span></h2></div><div class="field-controls"><span class="field-live"><i></i> LIVE FEED</span><span class="coord-label" id="coordLabel">GRID — / —</span></div></div>
+        <div class="map-frame"><canvas id="battlefield" width="960" height="600" aria-label="Top-down battlefield. Click to designate an artillery target."></canvas><div class="map-overlay-top"><span>◈ WESTERN APPROACH</span><span>◈ ENEMY LINE</span></div><div class="map-compass">N <span>↑</span></div><div class="map-corner">MAP 07C / 1:2500</div></div>
+        <div class="map-toolbar"><div><span class="target-dot">✛</span> <b>DESIGNATED TARGET</b> <span id="targetLabel">CLICK THE MAP</span></div><div><span class="kbd">CLICK</span> PLACE MARKER <span class="kbd">SPACE</span> FIRE</div></div>
+        <div class="mission-bottom"><div class="mission-brief"><div class="eyebrow">ORDERS FROM HEADQUARTERS</div><p>Hold the line. Support autonomous allied infantry. A victory is never guaranteed by artillery alone.</p></div><div class="casualty-counter"><span>ALLIED STRENGTH <b id="aliveAllies">15 / 15</b></span><span>ENEMY SIGHTINGS <b id="aliveEnemies">—</b></span></div></div>
+      </section>
+      <aside class="panel panel-right">
+        <div class="panel-heading"><div><div class="eyebrow">BATTERY COMMAND</div><h2>FIRE CONTROL</h2></div><span class="brass-stamp">⚙</span></div>
+        <div class="section-label">01 / SELECT FIELD GUN</div><div id="guns" class="gun-grid"></div>
+        <div class="section-label">02 / SELECT AMMUNITION</div><div id="shells" class="shell-stack"></div>
+        <div class="section-label">03 / CONFIRM FIRING SOLUTION</div>
+        <div class="fire-solution"><div><span>COORDINATES</span><b id="fireCoords">UNMARKED</b></div><div><span>BATTERY STATUS</span><b id="gunStatus">READY</b></div></div>
+        <button id="fireBtn" class="fire-button" disabled><span>✹</span> FIRE BATTERY <small>[ SPACE ]</small></button>
+        <div id="fireFeedback" class="fire-feedback">Designate a target on the tactical map.</div>
+        <div class="quick-keys"><span><b>1–4</b> SELECT GUN</span><span><b>Q / W / E / R</b> SHELL TYPE</span></div>
+        <div class="battery-note"><span>FIELD ADVISORY</span><p>Blast effects can endanger nearby allies. Smoke helps an advance; illumination improves observation.</p></div>
+      </aside>
+    </main>
+    <section class="campaign-panel">
+      <div class="campaign-heading"><div><div class="eyebrow">OPERATIONAL THEATER</div><h2>THE CAMPAIGN</h2></div><div class="campaign-metrics"><span>VICTORIES <b id="victories">0</b></span><span>DEFEATS <b id="defeats">0</b></span><span>REQUISITION <b id="credits">130 RP</b></span></div></div>
+      <div id="campaignMap" class="campaign-map" aria-label="Campaign sector map"></div>
+      <div class="upgrades-head"><div><div class="eyebrow">FIELD REQUISITIONS</div><h2>BATTERY IMPROVEMENTS</h2></div><span>UPGRADES AVAILABLE BETWEEN OPERATIONS</span></div>
+      <div id="upgrades" class="upgrade-grid"></div>
+      <div class="save-row"><span id="saveStatus">◉ AUTO-SAVE ENABLED</span><div><button class="small outline" id="saveBtn">SAVE CAMPAIGN</button><button class="small outline" id="resetBtn">NEW CAMPAIGN</button></div></div>
+    </section>
+    <footer>THE LAST LIGHT <span>—</span> A FICTIONAL TRENCH-WAR STRATEGY GAME <span>·</span> BUILD 1.0 <span>·</span> ALL COMBAT VALUES ARE ABSTRACT GAME RULES</footer>
+  </div>
+  <div id="overlay" class="overlay open" role="dialog" aria-modal="true" aria-labelledby="overlayTitle">
+    <div class="overlay-card"><div class="eyebrow" id="overlayEyebrow">WAR OFFICE / OPERATIONS</div><div class="overlay-ornament">✦</div><h2 id="overlayTitle">THE LAST LIGHT</h2><p id="overlaySubtitle">A war fought one sector at a time.</p><div id="overlayBody"></div><button id="overlayAction" class="fire-button overlay-action">BEGIN OPERATION →</button><div class="overlay-foot" id="overlayFoot">FICTIONAL WORLD · TACTICAL DECISIONS · UNCERTAIN OUTCOMES</div></div>
+  </div>
+  <script>
+// LAST LIGHT — pure, deterministic rules for a fictional artillery strategy game.
+// Coordinates and shell behavior are intentionally abstract game mechanics.
+const W = 960;
+const H = 600;
+const MISSION_SECONDS = 132;
+const SECTORS = ["Dunmere", "Ashen Ford", "Black Coppice", "Red Valley", "Glass Ridge", "Old Vey", "The Citadel"];
+const SHELLS = {
+  he:       { name: "High explosive", short: "HE", cost: 1, radius: 78, damage: 33, color: "#e7a55a", effect: "Blast & suppression" },
+  smoke:    { name: "Smoke", short: "SMK", cost: 1, radius: 118, damage: 0, color: "#c5cbba", effect: "Screen friendly advance" },
+  shrapnel: { name: "Airburst", short: "AIR", cost: 1, radius: 102, damage: 25, color: "#e5be77", effect: "Wide infantry suppression" },
+  flare:    { name: "Illumination", short: "FLR", cost: 1, radius: 130, damage: 0, color: "#eee2a9", effect: "Expose enemy positions" }
+};
+const UPGRADES = {
+  guns:     { name: "Additional field gun", desc: "Adds one gun to the battery (up to four).", base: 110, max: 3 },
+  caliber:  { name: "Heavy shells", desc: "Increases explosive force and suppression.", base: 95, max: 3 },
+  scouts:   { name: "Forward observers", desc: "Reduces dispersion and improves enemy spotting.", base: 85, max: 3 },
+  loaders:  { name: "Veteran gun crews", desc: "Shortens gun reload times.", base: 75, max: 3 },
+  supply:   { name: "Supply train", desc: "More shells available on each mission.", base: 80, max: 3 }
+};
+const clamp = (x, lo, hi) => Math.min(hi, Math.max(lo, x));
+const rnd = s => { s.seed = (Math.imul(1664525, s.seed) + 1013904223) >>> 0; return s.seed / 4294967296; };
+const range = (s, a, b) => a + (b - a) * rnd(s);
+function upgradeCost(s, key) { const u = UPGRADES[key]; return Math.round(u.base * (1 + (s.upgrades[key] || 0) * 0.8)); }
+function createCampaign(seed = 1826) {
+  return { version: 1, seed: seed >>> 0, credits: 130, day: 1, activeSector: 2,
+    sectors: [-0.15, -0.08, 0.01, 0.13, 0.22, 0.30, 0.42],
+    upgrades: { guns: 0, caliber: 0, scouts: 0, loaders: 0, supply: 0 },
+    history: [], victories: 0, defeats: 0, lastReport: null };
+}
+function buyUpgrade(c, key) {
+  if (!UPGRADES[key]) return { ok: false, reason: "Unknown upgrade" };
+  const level = c.upgrades[key] || 0;
+  if (level >= UPGRADES[key].max) return { ok: false, reason: "Fully upgraded" };
+  const cost = upgradeCost(c, key);
+  if (c.credits < cost) return { ok: false, reason: "Not enough requisition points" };
+  c.credits -= cost; c.upgrades[key] = level + 1;
+  return { ok: true, cost };
+}
+function makeUnit(s, team, i) {
+  const row = i % 7;
+  const y = 77 + row * 72 + range(s, -13, 13);
+  return { id: `${team}-${i}`, team, x: team === "ally" ? range(s, 110, 365) : range(s, 612, 855), y,
+    hp: 100, morale: range(s, 65, 100), strength: range(s, 0.8, 1.25), alive: true,
+    moving: false, jitter: range(s, 0, 10) };
+}
+function createMission(campaign) {
+  const seed = (campaign.seed + campaign.day * 991 + campaign.activeSector * 1013) >>> 0;
+  const s = { version: 1, seed, t: 0, paused: false, finished: false, result: null,
+    weather: ["DRIZZLE", "FOG", "CLEAR", "WIND"][seed % 4],
+    front: Array.from({length: 10}, (_, i) => 485 + (i % 3 - 1) * 10 + (campaign.sectors[campaign.activeSector] || 0) * 80),
+    allyPower: range({seed: seed ^ 0x55}, 0.84, 1.18), enemyPower: range({seed: seed ^ 0xa5}, 0.82, 1.20),
+    allyMorale: 78, enemyMorale: 80, support: 0, recon: 0, suppression: 0,
+    guns: Array.from({length: 1 + campaign.upgrades.guns}, (_, i) => ({id: i, reload: 0, shots: 0})),
+    ammo: { he: 13 + campaign.upgrades.supply * 6, smoke: 6 + campaign.upgrades.supply * 3,
+      shrapnel: 7 + campaign.upgrades.supply * 3, flare: 5 + campaign.upgrades.supply * 2 },
+    units: [...Array.from({length: 15}, (_, i) => makeUnit({seed: seed + i * 3}, "ally", i)),
+      ...Array.from({length: 16}, (_, i) => makeUnit({seed: seed + i * 7 + 100}, "enemy", i))],
+    requests: [], shots: [], effects: [], craters: [],
+    stats: { fired: 0, hits: 0, enemyLosses: 0, friendlyLosses: 0, requestsCompleted: 0,
+      requestsMissed: 0, requestsTotal: 0, supportScore: 0, roundsByType: { he: 0, smoke: 0, shrapnel: 0, flare: 0 } },
+    nextRequest: 8, nextSkirmish: 4, nextEnemyStrike: 12, nextFront: 2.5,
+    messages: [{t: 0, type:"radio", text:"Battery standing by. Infantry taking positions."}] };
+  return s;
+}
+function message(s, type, text) { s.messages.unshift({t:s.t, type, text}); if(s.messages.length > 18) s.messages.length = 18; }
+function near(a, b) { return Math.hypot(a.x - b.x, a.y - b.y); }
+function addRequest(s) {
+  if (s.finished || s.requests.filter(r => !r.done && !r.expired).length >= 3) return null;
+  const kind = ["he", "smoke", "shrapnel", "flare"][Math.floor(rnd(s) * 4)];
+  const y = range(s, 90, 525), x = kind === "smoke" ? range(s, 425, 550) : range(s, 585, 810);
+  const calls = {
+    he: "Enemy emplacement. Request immediate bombardment!",
+    smoke: "We're crossing open ground. Need a smoke screen!",
+    shrapnel: "Infantry massing ahead. Request airburst!",
+    flare: "Can't see their positions. Request illumination!"
+  };
+  const req = { id: Math.floor(rnd(s)*1e9).toString(36), x, y, kind, ttl: 29, done: false, expired: false,
+    unit: ["3rd Rifles", "Cedar Company", "North Platoon", "8th Foot", "Falcon Section"][Math.floor(rnd(s)*5)],
+    text: calls[kind] };
+  s.requests.push(req); s.stats.requestsTotal++;
+  message(s, "radio", `${req.unit}: ${req.text}`); return req;
+}
+function fire(s, c, gunIndex, kind, target) {
+  if (s.finished || s.paused) return {ok:false, reason:"Mission not active"};
+  const gun = s.guns[gunIndex];
+  if (!gun) return {ok:false, reason:"Select a field gun"};
+  if (!SHELLS[kind]) return {ok:false, reason:"Unknown ammunition"};
+  if (gun.reload > 0) return {ok:false, reason:"Gun crew reloading"};
+  if (s.ammo[kind] <= 0) return {ok:false, reason:"Ammunition exhausted"};
+  if (!target || !Number.isFinite(target.x) || !Number.isFinite(target.y)) return {ok:false, reason:"Mark a valid target"};
+  const x = clamp(target.x, 20, W-20), y = clamp(target.y, 20, H-20);
+  const dispersion = Math.max(6, 45 - 10 * c.upgrades.scouts + (s.weather === "WIND" ? 8 : 0));
+  const angle = rnd(s)*Math.PI*2, distance = Math.sqrt(rnd(s))*dispersion;
+  s.shots.push({x: clamp(x + Math.cos(angle)*distance, 15, W-15),
+    y: clamp(y + Math.sin(angle)*distance, 15, H-15), targetX:x, targetY:y,
+    kind, ttl: 1.15 + rnd(s)*0.5, total: 1.65, gun:gunIndex});
+  s.ammo[kind]--; s.stats.fired++; s.stats.roundsByType[kind]++; gun.shots++;
+  gun.reload = Math.max(1.3, 5.7 - c.upgrades.loaders * 1.15);
+  message(s, "order", `Gun ${gunIndex+1}: ${SHELLS[kind].short} round away.`);
+  return {ok:true};
+}
+function impact(s, c, shot) {
+  const {kind, x, y} = shot, info = SHELLS[kind];
+  const blast = info.radius + (kind === "he" ? c.upgrades.caliber*12 : 0);
+  let tagged = 0;
+  for (const u of s.units) {
+    if (!u.alive) continue;
+    const d = Math.hypot(x-u.x, y-u.y);
+    if (d > blast) continue;
+    const f = Math.pow(1-d/blast, 0.65);
+    if (kind === "he" || kind === "shrapnel") {
+      const damage = info.damage * (1 + c.upgrades.caliber*0.24) * f * (kind === "shrapnel" ? 1.15:1);
+      u.hp -= damage * 1.7; u.morale -= damage * 0.8;
+      if (u.team === "enemy") { tagged++; s.stats.hits++; s.suppression += f*2.3; }
+      if (u.team === "ally") s.allyMorale -= f*2.5;
+      if (u.hp <= 0) {
+        u.alive = false;
+        if (u.team === "enemy") s.stats.enemyLosses++;
+        else {s.stats.friendlyLosses++; message(s, "danger", "Friendly casualties reported near the impact zone.");}
+      }
+    }
+  }
+  if(kind === "smoke") { s.support += 9; s.allyMorale = clamp(s.allyMorale+2,0,100); }
+  if(kind === "flare") { s.recon += 15; s.support += 2; }
+  if(tagged && kind !== "smoke" && kind !== "flare") {s.support += Math.min(5,tagged*0.4); s.enemyMorale -= Math.min(7, tagged*0.9);}
+  s.effects.push({kind, x, y, life: kind === "smoke" ? 14 : kind === "flare" ? 10 : 1.2,
+    max: kind === "smoke" ? 14 : kind === "flare" ? 10 : 1.2, radius:blast});
+  if(kind === "he" || kind === "shrapnel") s.craters.push({x,y,r:range(s,12,26)});
+  if(s.craters.length>100) s.craters.shift();
+  for(const r of s.requests){
+    if(r.done || r.expired || r.kind !== kind) continue;
+    if(Math.hypot(x-r.x,y-r.y) < (kind === "flare" ? 150: kind === "smoke" ? 132: 105)){
+      r.done=true; s.stats.requestsCompleted++; s.stats.supportScore+=25;
+      s.support+=8; s.allyMorale=clamp(s.allyMorale+3,0,100);
+      message(s,"success",`${r.unit}: Fire mission effective. Outstanding support!`);
+      break;
+    }
+  }
+  message(s, tagged?"success":"field", tagged ? `Impact confirmed. ${tagged} enemy positions suppressed.` : `${info.short} impact registered.`);
+}
+function skirmish(s, c, dt) {
+  const aliveAlly=s.units.filter(u=>u.alive&&u.team==="ally");
+  const aliveEnemy=s.units.filter(u=>u.alive&&u.team==="enemy");
+  for(const u of s.units){
+    if(!u.alive) continue;
+    const line=s.front[clamp(Math.floor(u.y/60),0,9)];
+    const targetX=u.team==="ally"?line-45:line+70;
+    const speed= (u.team==="ally" ? 5.5+s.support*0.15 : 5.7+s.enemyPower*2.5)*dt;
+    u.x+=clamp(targetX-u.x,-speed,speed);
+    u.jitter+=dt; u.y=clamp(u.y+Math.sin(u.jitter*0.9)*dt*2,25,H-25);
+    if(s.recon>0 && u.team==="enemy")u.spotted=true;
+  }
+  if(s.t>=s.nextSkirmish){
+    s.nextSkirmish+=range(s,2.0,3.7);
+    for(const [attackers, defenders, power] of [[aliveAlly,aliveEnemy,s.allyPower],[aliveEnemy,aliveAlly,s.enemyPower]]){
+      if(!attackers.length || !defenders.length) continue;
+      const a=attackers[Math.floor(rnd(s)*attackers.length)];
+      const d=defenders.reduce((best,u)=>near(a,u)<near(a,best)?u:best, defenders[0]);
+      if(near(a,d)<370 && rnd(s)<0.66){
+        const damage=range(s,3,12)*power*(attackers===aliveAlly?(1+s.support*0.015):1);
+        d.hp-=damage;d.morale-=damage*0.4;
+        if(d.hp<=0){d.alive=false;if(d.team==="ally") s.stats.friendlyLosses++; else s.stats.enemyLosses++;}
+      }
+    }
+  }
+  if(s.t>=s.nextEnemyStrike){
+    s.nextEnemyStrike += range(s,12,18);
+    const x=range(s,275,485), y=range(s,50,550);
+    s.effects.push({kind:"enemy",x,y,life:1.5,max:1.5,radius:50});
+    for(const u of aliveAlly){if(Math.hypot(x-u.x,y-u.y)<65){u.hp-=range(s,6,24);u.morale-=8;if(u.hp<=0){u.alive=false;s.stats.friendlyLosses++;}}}
+    s.allyMorale=clamp(s.allyMorale-range(s,1,4),0,100);
+    message(s,"danger","Enemy counterbattery fire detected near the line!");
+  }
+  if(s.t>=s.nextFront){
+    s.nextFront+=3.5;
+    const allyCount=aliveAlly.length,enemyCount=aliveEnemy.length;
+    const own=(allyCount/15)*s.allyPower*(s.allyMorale/80) + s.support*0.035;
+    const foe=(enemyCount/16)*s.enemyPower*(s.enemyMorale/80)+0.10;
+    const tide=clamp((own-foe)*17 + range(s,-6,6),-16,16);
+    for(let i=0;i<s.front.length;i++){
+      const noise=range(s,-3.2,3.2);
+      s.front[i]=clamp(s.front[i] + tide + noise,290,685);
+    }
+    s.allyMorale=clamp(s.allyMorale+range(s,-1,0.8),0,100);
+    s.enemyMorale=clamp(s.enemyMorale+range(s,-0.6,0.8),0,100);
+  }
+}
+function stepMission(s, c, dt){
+  if(s.finished || s.paused || !Number.isFinite(dt) || dt<=0) return;
+  dt=Math.min(dt,0.15); s.t+=dt;
+  s.support=Math.max(0,s.support-dt*0.23); s.suppression=Math.max(0,s.suppression-dt*0.1); s.recon=Math.max(0,s.recon-dt);
+  for(const g of s.guns)g.reload=Math.max(0,g.reload-dt);
+  for(let i=s.shots.length-1;i>=0;i--){const sh=s.shots[i]; sh.ttl-=dt;if(sh.ttl<=0){s.shots.splice(i,1);impact(s,c,sh);}}
+  for(let i=s.effects.length-1;i>=0;i--){s.effects[i].life-=dt;if(s.effects[i].life<=0)s.effects.splice(i,1);}
+  for(const r of s.requests){if(!r.done&&!r.expired){r.ttl-=dt;if(r.ttl<=0){r.expired=true;s.stats.requestsMissed++;message(s,"danger",`${r.unit}: Fire mission cancelled. Too late.`);}}}
+  if(s.t>=s.nextRequest){addRequest(s);s.nextRequest+=range(s,16,22);}
+  skirmish(s,c,dt);
+  if(s.t>=MISSION_SECONDS || s.allyMorale<=12 || s.enemyMorale<=12 || s.front.every(x=>x>660)||s.front.every(x=>x<315)) endMission(s,c);
+}
+function endMission(s,c){
+  if(s.finished)return s.result;
+  s.finished=true;
+  const averageFront=s.front.reduce((a,b)=>a+b,0)/s.front.length;
+  const territory=(averageFront-485)/185;
+  const allies=s.units.filter(u=>u.team==="ally"&&u.alive).length;
+  const enemies=s.units.filter(u=>u.team==="enemy"&&u.alive).length;
+  const score=territory*0.63 +(allies/15-enemies/16)*0.20 +(s.allyMorale-s.enemyMorale)/100*0.17 + (s.allyPower-s.enemyPower)*0.14;
+  const outcome=score>0.12?"victory":score< -0.10?"defeat":"stalemate";
+  const shift=outcome==="victory"?0.09+Math.max(0,score)*0.04:outcome==="defeat"?-0.09+Math.min(0,score)*0.04:0.01;
+  c.sectors[c.activeSector]=clamp(c.sectors[c.activeSector]+shift,-0.8,0.85);
+  // Higher sector balance means an Allied advance; negative means enemy pressure.
+  if(outcome==="victory") c.victories++; if(outcome==="defeat") c.defeats++;
+  const completion=s.stats.requestsTotal? s.stats.requestsCompleted/s.stats.requestsTotal:0;
+  const reward=Math.round((outcome==="victory"?95:outcome==="stalemate"?57:32)+s.stats.requestsCompleted*12+Math.min(60,s.stats.enemyLosses*3)-s.stats.friendlyLosses*2);
+  c.credits+=Math.max(20,reward);
+  const report={day:c.day,sector:SECTORS[c.activeSector],outcome,score:Math.round(score*100),shift:Math.round(shift*100),credits:Math.max(20,reward),
+    fired:s.stats.fired,hits:s.stats.hits,enemyLosses:s.stats.enemyLosses,friendlyLosses:s.stats.friendlyLosses,
+    requestsCompleted:s.stats.requestsCompleted,requestsTotal:s.stats.requestsTotal,completion:Math.round(completion*100),
+    alliedPerformance: Math.round(s.allyPower*100),enemyPerformance:Math.round(s.enemyPower*100),
+    survivingAllies:allies,survivingEnemies:enemies,
+    notes:[
+      completion>=0.6?"Radio coordination was strong; infantry received timely fire support.":"Missed fire missions reduced the infantry's ability to maneuver.",
+      s.stats.friendlyLosses>1?"Friendly units suffered losses. Check firing zones before striking.":"Fire discipline protected friendly formations.",
+      s.stats.roundsByType.smoke>=2?"Smoke screens helped allied troops cross exposed ground.":"Consider smoke screens during infantry advances.",
+      score>0?"Local infantry initiative contributed to the battle's outcome.":"Allied and enemy battlefield performance affected the result beyond your control."
+    ]};
+  s.result=report;c.lastReport=report;c.history.unshift(report);if(c.history.length>30)c.history.length=30;
+  c.day++;
+  if(outcome==="victory"&&c.activeSector<SECTORS.length-1 && rnd(s)>0.33)c.activeSector++;
+  if(outcome==="defeat"&&c.activeSector>0 && rnd(s)>0.55)c.activeSector--;
+  message(s,"order",`HEADQUARTERS: ${outcome.toUpperCase()}. Detailed report available.`);
+  return report;
+}
+function safeCampaign(raw){
+  if(!raw || raw.version!==1 || !Array.isArray(raw.sectors))return createCampaign();
+  const c=createCampaign();
+  c.seed=(Number(raw.seed)||1826)>>>0; c.credits=clamp(Number(raw.credits)||0,0,999999);
+  c.day=clamp(Math.floor(Number(raw.day)||1),1,99999);c.activeSector=clamp(Math.floor(Number(raw.activeSector)||0),0,SECTORS.length-1);
+  c.sectors=c.sectors.map((v,i)=>clamp(Number(raw.sectors[i])||0,-0.8,0.85));
+  for(const k of Object.keys(UPGRADES))c.upgrades[k]=clamp(Math.floor(Number(raw.upgrades?.[k])||0),0,UPGRADES[k].max);
+  c.victories=clamp(Number(raw.victories)||0,0,99999);c.defeats=clamp(Number(raw.defeats)||0,0,99999);
+  c.history=Array.isArray(raw.history)?raw.history.slice(0,30):[];
+  c.lastReport=raw.lastReport||null;return c;
+}
+
+const $ = id => document.getElementById(id);
+const cvs=$('battlefield'), ctx=cvs.getContext('2d',{alpha:false});
+const STORAGE='last-light-save-v1';
+const shellKeys=Object.keys(SHELLS);
+let campaign=createCampaign(), mission, selectedGun=0, selectedShell='he', target=null, selectedRequest=null;
+let running=false, speed=1, muted=false, audio=null, lastFrame=performance.now(), lastUI=0, lastSave=0, lastShotCount=0;
+let pointer={x:-100,y:-100}, phase='intro', effectParticles=[], terrainCanvas;
+function escapeHtml(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function load(){try{const obj=JSON.parse(localStorage.getItem(STORAGE));if(!obj||obj.version!==1)return false;campaign=safeCampaign(obj.campaign);if(obj.mission?.version===1&&obj.mission?.units?.length&&obj.mission?.guns?.length){mission=obj.mission;phase=mission.finished?'between':'intro';return true;}return false;}catch{return false;}}
+function save(show=false){try{localStorage.setItem(STORAGE,JSON.stringify({version:1,campaign,mission}));if(show){$('saveStatus').textContent='✓ CAMPAIGN SAVED LOCALLY';setTimeout(()=>{$('saveStatus').textContent='◉ AUTO-SAVE ENABLED'},2000);}}catch{$('saveStatus').textContent='LOCAL STORAGE UNAVAILABLE';}}
+function init(){const resumed=load();if(!mission)mission=createMission(campaign);terrainCanvas=makeTerrain();setupEvents();renderCampaign();renderUpgrades();renderShells();renderGuns();updateUI();if(resumed && mission.finished){showReport();}else{showIntro(resumed);}requestAnimationFrame(loop);}
+function setupEvents(){
+  cvs.addEventListener('pointermove',e=>{pointer=mapPos(e);$('coordLabel').textContent=`GRID ${String(Math.round(pointer.x/10)).padStart(2,'0')} / ${String(Math.round(pointer.y/10)).padStart(2,'0')}`;});
+  cvs.addEventListener('pointerleave',()=>{pointer={x:-100,y:-100};$('coordLabel').textContent='GRID — / —';});
+  cvs.addEventListener('pointerdown',e=>{if(phase!=='playing')return;const pos=mapPos(e);if(e.button===2)return;markTarget(pos);});
+  cvs.addEventListener('contextmenu',e=>e.preventDefault());
+  $('fireBtn').onclick=()=>{if(phase==='between'){nextMission();return;}performFire();};
+  $('pauseBtn').onclick=()=>{if(phase!=='playing')return;mission.paused=!mission.paused;$('pauseBtn').textContent=mission.paused?'▶ RESUME':'Ⅱ PAUSE';};
+  $('speedBtn').onclick=()=>{speed=speed===1?2:speed===2?3:1;$('speedBtn').textContent=`${speed}× SPEED`;};
+  $('soundBtn').onclick=()=>{muted=!muted;$('soundBtn').textContent=muted?'♫ OFF':'♫ ON';if(!muted)bleep();};
+  $('saveBtn').onclick=()=>save(true);
+  $('resetBtn').onclick=()=>{if(!window.confirm('Start a new campaign? Current save and upgrades will be overwritten.'))return;campaign=createCampaign((Date.now()>>>0));mission=createMission(campaign);selectedGun=0;selectedShell='he';target=null;selectedRequest=null;phase='intro';running=false;save(true);renderCampaign();renderUpgrades();showIntro(false);};
+  $('overlayAction').onclick=()=>{if(phase==='intro'){phase='playing';running=true;$('overlay').classList.remove('open');mission.paused=false;lastFrame=performance.now();}else if(phase==='report'){phase='between';$('overlay').classList.remove('open');renderUpgrades();updateUI();}};
+  window.addEventListener('keydown',e=>{if(e.target instanceof HTMLElement&&['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName))return;
+    if(e.code==='Space'){e.preventDefault();if(phase==='playing')performFire();}
+    const gun=Number(e.key)-1;if(gun>=0&&gun<mission.guns.length)chooseGun(gun);
+    const k={q:'he',w:'smoke',e:'shrapnel',r:'flare'}[e.key.toLowerCase()];if(k)chooseShell(k);
+    if(e.key.toLowerCase()==='p'&&phase==='playing')$('pauseBtn').click();
+  });
+  document.addEventListener('visibilitychange',()=>{if(document.hidden&&phase==='playing'){mission.paused=true;$('pauseBtn').textContent='▶ RESUME';save();}});
+}
+function mapPos(e){const r=cvs.getBoundingClientRect();return{x:clamp((e.clientX-r.left)/r.width*W,0,W),y:clamp((e.clientY-r.top)/r.height*H,0,H)};}
+function markTarget(p){target={x:Math.round(p.x),y:Math.round(p.y)};selectedRequest=null;
+  $('targetLabel').textContent=`X ${String(Math.round(target.x/10)).padStart(2,'0')} · Y ${String(Math.round(target.y/10)).padStart(2,'0')}`;
+  for(const r of mission.requests)if(!r.done&&!r.expired&&Math.hypot(r.x-p.x,r.y-p.y)<40){selectedRequest=r.id;selectedShell=r.kind;break;}
+  renderShells();renderRequests();updateControls();bleep(500);
+}
+function chooseGun(i){selectedGun=i;renderGuns();updateControls();}
+function chooseShell(k){selectedShell=k;renderShells();updateControls();}
+function performFire(){if(phase!=='playing')return;
+  const r=fire(mission,campaign,selectedGun,selectedShell,target);
+  if(r.ok){$('fireFeedback').textContent='ROUND AWAY — OBSERVE IMPACT';$('fireFeedback').style.color='#dec192';sfx('fire');}
+  else{$('fireFeedback').textContent=r.reason.toUpperCase();$('fireFeedback').style.color='#df9a8b';bleep(190);}
+  renderShells();renderGuns();updateControls();save();
+}
+function renderGuns(){const wrap=$('guns');wrap.innerHTML='';mission.guns.forEach((g,i)=>{const b=document.createElement('button');b.className='gun'+(i===selectedGun?' selected':'');b.setAttribute('aria-label',`Select gun ${i+1}`);b.innerHTML=`<span class="gun-icon">♜</span><small>GUN ${String(i+1).padStart(2,'0')}</small><div class="gun-bar"><span style="width:${Math.round((1-clamp(g.reload/5.7,0,1))*100)}%"></span></div>`;b.onclick=()=>chooseGun(i);wrap.append(b);});}
+function renderShells(){const glyph={he:'✹',smoke:'☁',shrapnel:'✦',flare:'☼'};$('shells').innerHTML='';shellKeys.forEach(k=>{const info=SHELLS[k],b=document.createElement('button');b.className='shell'+(selectedShell===k?' selected':'');b.innerHTML=`<span class="shell-glyph">${glyph[k]}</span><span><span class="shell-name">${info.name.toUpperCase()}</span><span class="shell-desc">${info.effect}</span></span><span class="shell-count">${mission.ammo[k]}</span>`;b.onclick=()=>chooseShell(k);$('shells').append(b);});}
+function renderRequests(){const wrap=$('requests');wrap.innerHTML='';const list=mission.requests.filter(r=>!r.done&&!r.expired);
+  if(!list.length){wrap.innerHTML='<div class="empty-state">No urgent calls on the line.<br>Monitor the front.</div>';return;}
+  for(const r of list){const b=document.createElement('button');b.className='request'+(selectedRequest===r.id?' selected':'');b.innerHTML=`<div class="request-title"><span>◉ ${escapeHtml(r.unit.toUpperCase())}</span><span class="request-ttl">${Math.ceil(r.ttl)}s</span></div><p>${escapeHtml(r.text)}</p><small>${SHELLS[r.kind].short} REQUEST · GRID ${Math.round(r.x/10)}/${Math.round(r.y/10)}</small><div class="request-timer"><span style="width:${clamp(r.ttl/29*100,0,100)}%"></span></div>`;
+    b.onclick=()=>{selectedRequest=r.id;target={x:r.x,y:r.y};chooseShell(r.kind);$('targetLabel').textContent=`X ${Math.round(r.x/10)} · Y ${Math.round(r.y/10)}`;renderRequests();updateControls();bleep(520);};wrap.append(b);}
+}
+function renderLog(){const n=$('radioLog');n.innerHTML=mission.messages.slice(0,10).map(m=>`<div class="log-entry ${escapeHtml(m.type)}"><span class="log-time">${fmt(MISSION_SECONDS-m.t)}</span>${escapeHtml(m.text)}</div>`).join('');}
+function renderCampaign(){const wrap=$('campaignMap');wrap.innerHTML='';campaign.sectors.forEach((v,i)=>{const dom=document.createElement('div');dom.className='campaign-sector'+(i===campaign.activeSector?' current':'');const ground=clamp((v+0.8)/1.65*100,0,100);dom.innerHTML=`<small>${String(i+1).padStart(2,'0')} / SECTOR</small><strong>${escapeHtml(SECTORS[i].toUpperCase())}</strong><div class="sector-tide"><span style="width:${ground}%"></span></div><div class="sector-pos">${i===campaign.activeSector?'◆ ACTIVE FRONT':v>0.10?'ALLIED GAINS':v< -0.08?'ENEMY PRESSURE':'CONTESTED'}</div>`;wrap.append(dom);});$('credits').textContent=`${campaign.credits} RP`;$('victories').textContent=campaign.victories;$('defeats').textContent=campaign.defeats;$('dayLabel').textContent=String(campaign.day).padStart(2,'0');$('sectorLabel').textContent=SECTORS[campaign.activeSector].toUpperCase();$('fieldSector').textContent=SECTORS[campaign.activeSector].toUpperCase();}
+function renderUpgrades(){const wrap=$('upgrades');wrap.innerHTML='';for(const [key,u] of Object.entries(UPGRADES)){const level=campaign.upgrades[key],cost=upgradeCost(campaign,key);const box=document.createElement('div');box.className='upgrade';box.innerHTML=`<div class="upgrade-title">${escapeHtml(u.name.toUpperCase())}</div><div class="upgrade-stars">${'★'.repeat(level)}${'☆'.repeat(u.max-level)}</div><p>${escapeHtml(u.desc)}</p>`;const b=document.createElement('button');b.textContent=level>=u.max?'MAX LEVEL':`REQUISITION · ${cost} RP`;b.disabled=phase==='playing'||level>=u.max||campaign.credits<cost;b.onclick=()=>{const r=buyUpgrade(campaign,key);if(r.ok){mission=createMission(campaign);selectedGun=0;save(true);renderCampaign();renderUpgrades();renderGuns();renderShells();updateUI();bleep(680);} };box.append(b);wrap.append(box);}}
+function updateControls(){const g=mission.guns[selectedGun],ready=!!target&&g&&g.reload<=0&&mission.ammo[selectedShell]>0&&phase==='playing'&&!mission.paused;$('fireBtn').disabled=!ready;
+  $('fireCoords').textContent=target?`${Math.round(target.x/10)} / ${Math.round(target.y/10)}`:'UNMARKED';
+  $('gunStatus').textContent=g?(g.reload>0?`RELOAD ${g.reload.toFixed(1)}S`:'READY TO FIRE'):'NO GUN';}
+function updateUI(){const left=Math.max(0,MISSION_SECONDS-mission.t);$('timeLabel').textContent=fmt(left);$('allyLabel').textContent=`${Math.max(0,Math.round(mission.allyMorale))}%`;$('enemyLabel').textContent=`${Math.max(0,Math.round(mission.enemyMorale))}%`;$('allyFill').style.width=`${clamp(mission.allyMorale,0,100)}%`;$('enemyFill').style.width=`${clamp(mission.enemyMorale,0,100)}%`;
+  const f=mission.front.reduce((a,b)=>a+b,0)/mission.front.length;$('frontLabel').textContent=f>513?'ADVANCING':f<458?'FALLING BACK':'CONTESTED';$('frontLabel').style.color=f>513?'#a9c599':f<458?'#d99888':'#dfc29b';$('weatherLabel').textContent=mission.weather;
+  $('aliveAllies').textContent=`${mission.units.filter(u=>u.team==='ally'&&u.alive).length} / 15`;
+  $('aliveEnemies').textContent=mission.recon>0||mission.t>70?`${mission.units.filter(u=>u.team==='enemy'&&u.alive).length} DETECTED`:'UNCONFIRMED';
+  if(phase==='between'){$('fireBtn').disabled=false;$('fireBtn').innerHTML='DEPLOY NEXT MISSION →';$('fireFeedback').textContent='REVIEW THE CAMPAIGN AND PURCHASE UPGRADES';}
+  else {$('fireBtn').innerHTML='<span>✹</span> FIRE BATTERY <small>[ SPACE ]</small>';updateControls();}
+  renderGuns();renderShells();renderRequests();renderLog();}
+function fmt(s){return `${String(Math.floor(Math.max(0,s)/60)).padStart(2,'0')}:${String(Math.floor(Math.max(0,s)%60)).padStart(2,'0')}`;}
+function showIntro(resumed){phase='intro';running=false;const name=SECTORS[campaign.activeSector];$('overlay').classList.add('open');$('overlayEyebrow').textContent=`HEADQUARTERS · OPERATION ${String(campaign.day).padStart(2,'0')}`;$('overlayTitle').textContent='THE LAST LIGHT';$('overlaySubtitle').textContent=`${name} — The guns decide where they strike. The infantry decides whether they advance.`;
+  $('overlayBody').innerHTML=`<div class="overlay-grid"><div><b>${mission.guns.length}</b><span>FIELD GUNS</span></div><div><b>${Object.values(mission.ammo).reduce((a,b)=>a+b,0)}</b><span>ROUNDS READY</span></div><div><b>${mission.weather}</b><span>CONDITIONS</span></div></div><p class="narrow">Select a gun and a shell, then click the top-down battlefield to mark a target. Fire by pressing <span class="focus">SPACE</span>. Respond to urgent radio calls, use smoke to shield the advance, and protect friendly troops. Your allies fight on their own — even excellent fire support may not secure victory.</p><div class="hint">${resumed&&mission.t>0?'SAVED OPERATION FOUND · RESUME YOUR EXISTING BATTLE':'NEW OPERATION READY · REQUISITION UPGRADES AFTER EACH MISSION'}</div>`;
+  $('overlayAction').textContent=resumed&&mission.t>0?'RESUME OPERATION →':'DEPLOY TO THE FRONT →';renderUpgrades();}
+function showReport(){phase='report';running=false;const r=mission.result;renderCampaign();renderUpgrades();save(true);$('overlay').classList.add('open');$('overlayEyebrow').textContent=`AFTER-ACTION REPORT · DAY ${String(r.day).padStart(2,'0')}`;$('overlayTitle').textContent=r.outcome==='victory'?'GROUND TAKEN':r.outcome==='defeat'?'THE LINE BROKE':'GROUND CONTESTED';$('overlaySubtitle').textContent=`${r.sector} · ${r.outcome.toUpperCase()} · ${r.shift>=0?'+':''}${r.shift}% CAMPAIGN CONTROL`;
+  $('overlayBody').innerHTML=`<div class="overlay-grid"><div><b>${r.credits} RP</b><span>SUPPLIES EARNED</span></div><div><b>${r.requestsCompleted}/${r.requestsTotal}</b><span>CALLS ANSWERED</span></div><div><b>${r.enemyLosses}</b><span>ENEMY LOSSES</span></div><div><b>${r.friendlyLosses}</b><span>FRIENDLY LOSSES</span></div><div><b>${r.fired}</b><span>ROUNDS FIRED</span></div><div><b>${r.alliedPerformance}%</b><span>ALLIED INITIATIVE</span></div></div>${r.notes.map(n=>`<div class="report-note">${escapeHtml(n)}</div>`).join('')}`;
+  $('overlayAction').textContent='VIEW CAMPAIGN & UPGRADES →';}
+function nextMission(){mission=createMission(campaign);terrainCanvas=makeTerrain();selectedGun=0;target=null;selectedRequest=null;lastShotCount=0;effectParticles=[];phase='intro';save(true);renderCampaign();renderUpgrades();renderGuns();renderShells();updateUI();showIntro(false);}
+function loop(now){const dt=Math.min(0.07,(now-lastFrame)/1000||0);lastFrame=now;
+  if(phase==='playing'&&!mission.paused){let remaining=dt*speed;while(remaining>0){const s=Math.min(0.06,remaining);stepMission(mission,campaign,s);remaining-=s;if(mission.finished)break;}
+    if(mission.finished)showReport();}
+  render(now/1000);
+  if(now-lastUI>180){updateUI();lastUI=now;}
+  if(now-lastSave>4500){save();lastSave=now;}
+  requestAnimationFrame(loop);
+}
+// Pixel-art battlefield painter. All terrain, sprites, and VFX are generated locally.
+function hash(x,y,seed=17){let n=(Math.imul(x+seed,374761393)+Math.imul(y+seed,668265263))|0;n=Math.imul(n^(n>>>13),1274126177);return((n^(n>>>16))>>>0)/4294967295;}
+function makeTerrain(){const off=document.createElement('canvas');off.width=W;off.height=H;const g=off.getContext('2d');g.fillStyle='#69735b';g.fillRect(0,0,W,H);
+  for(let y=0;y<H;y+=8)for(let x=0;x<W;x+=8){const n=hash(x/8,y/8,campaign.day);g.fillStyle=n>.83?'#80846a':n>.57?'#70795e':n>.23?'#656d55':'#5d694e';g.fillRect(x,y,8,8);}
+  for(let i=0;i<175;i++){const x=Math.floor(hash(i,31,campaign.day)*W/8)*8,y=Math.floor(hash(i,64,campaign.day)*H/8)*8;g.fillStyle=i%3===0?'#9b946d':'#484d42';g.fillRect(x,y,8+(i%3)*8,4);}
+  // Top-down roads running through muddy fields.
+  g.fillStyle='#837f67';for(let y=0;y<H;y+=8){const x=95+Math.sin(y/70)*17;g.fillRect(x,y,42,8);}
+  for(let x=0;x<W;x+=8){const y=488+Math.sin(x/85)*16;g.fillRect(x,y,8,24);}
+  g.fillStyle='#586448';for(let i=0;i<50;i++){const x=Math.floor(hash(i,16)*W/8)*8,y=Math.floor(hash(i,19)*H/8)*8;g.fillRect(x,y,8,8);g.fillRect(x-8,y+8,24,8);}
+  // Farmhouse ruins and a broken mill.
+  for(const b of [{x:212,y:127,w:66,h:48},{x:745,y:441,w:82,h:60},{x:815,y:88,w:57,h:41}]){
+    g.fillStyle='#4b5245';g.fillRect(b.x-5,b.y-5,b.w+10,b.h+10);g.fillStyle='#a9a18b';g.fillRect(b.x,b.y,b.w,b.h);g.fillStyle='#716c5b';g.fillRect(b.x+8,b.y+8,b.w-16,b.h-16);g.fillStyle='#3c453f';g.fillRect(b.x+16,b.y+16,b.w-32,b.h-32);
+    g.fillStyle='#c4b7a1';g.fillRect(b.x+5,b.y+5,b.w-10,4);g.fillRect(b.x+5,b.y+b.h-9,b.w-10,4);
+  }
+  return off;
+}
+function linePath(xs,offset=0){ctx.beginPath();ctx.moveTo(xs[0]+offset,0);for(let i=0;i<xs.length;i++){const y=(i+0.5)*H/xs.length;ctx.lineTo(xs[i]+offset,y);if(i<xs.length-1){ctx.lineTo(xs[i]+offset+((i%2)?-8:8),y+10);}}ctx.lineTo(xs.at(-1)+offset,H);}
+function drawTrenches(){const xs=mission.front;
+  ctx.fillStyle='#8a836b';ctx.globalAlpha=.14;linePath(xs);ctx.lineTo(W,H);ctx.lineTo(W,0);ctx.fill();ctx.globalAlpha=1;
+  for(const [offset,back,dark,edge] of [[-65,'#6d5f48','#302c27','#aa9271'],[68,'#725747','#342b28','#b49a76']]){
+    linePath(xs,offset);ctx.strokeStyle=back;ctx.lineWidth=24;ctx.stroke();linePath(xs,offset);ctx.strokeStyle=edge;ctx.lineWidth=13;ctx.stroke();linePath(xs,offset);ctx.strokeStyle=dark;ctx.lineWidth=8;ctx.stroke();
+    for(let i=0;i<24;i++){const y=i*26,idx=clamp(Math.floor(y/H*xs.length),0,xs.length-1),x=xs[idx]+offset;
+      ctx.fillStyle=i%3?'#9b8969':'#b09c7b';ctx.fillRect(Math.round(x)-12,y,7,5);ctx.fillRect(Math.round(x)+5,y+6,7,5);}
+  }
+  for(let i=0;i<42;i++){const y=hash(i,101)*H,idx=clamp(Math.floor(y/H*xs.length),0,xs.length-1),x=xs[idx]+(i%2?14:-15);ctx.strokeStyle='#303a31';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+10,y+8);ctx.moveTo(x+10,y);ctx.lineTo(x,y+8);ctx.stroke();}
+  // Faint dotted front line between both positions.
+  ctx.setLineDash([5,9]);linePath(xs);ctx.strokeStyle='#e8ddad8a';ctx.lineWidth=2;ctx.stroke();ctx.setLineDash([]);
+}
+function drawCrater(x,y,r){ctx.fillStyle='#444438';ctx.fillRect(Math.round(x-r),Math.round(y-r/2),Math.round(r*2),Math.round(r));ctx.fillStyle='#353e35';ctx.fillRect(Math.round(x-r*.6),Math.round(y-r*.35),Math.round(r*1.2),Math.round(r*.7));ctx.fillStyle='#b0a285';ctx.fillRect(Math.round(x-r*.72),Math.round(y-r*.62),Math.round(r*.8),3);}
+function drawUnit(u,t){if(!u.alive){ctx.fillStyle='#394239';ctx.fillRect(Math.round(u.x),Math.round(u.y),5,3);return;}
+  const hidden=u.team==='enemy'&&mission.recon<=0&&u.x>mission.front[clamp(Math.floor(u.y/60),0,9)]+120;
+  if(hidden)return;
+  const px=Math.round(u.x),py=Math.round(u.y),ally=u.team==='ally';
+  ctx.fillStyle='#202921bb';ctx.fillRect(px-5,py+4,12,4);
+  ctx.fillStyle=ally?'#b4c79a':'#ca826e';ctx.fillRect(px-4,py-5,8,9);
+  ctx.fillStyle=ally?'#586f54':'#65463b';ctx.fillRect(px-5,py-7,10,4);ctx.fillRect(px-3,py+4,3,4);ctx.fillRect(px+2,py+4,3,4);
+  ctx.fillStyle='#222924';ctx.fillRect(px+(ally?3:-10),py-1,7,2);
+  if(u.hp<40){ctx.fillStyle='#dbad77';ctx.fillRect(px-6,py-11,12,2);ctx.fillStyle='#bc7166';ctx.fillRect(px-6,py-11,12*u.hp/100,2);}
+  const phase=(u.jitter*2)%8<3; if(phase){ctx.fillStyle='#d3c792';ctx.fillRect(px+2,py-2,2,2);}
+}
+function render(t){ctx.imageSmoothingEnabled=false;ctx.drawImage(terrainCanvas,0,0);
+  if(mission.weather==='FOG'){ctx.fillStyle='#cad3c016';ctx.fillRect(0,0,W,H);}if(mission.weather==='DRIZZLE'){ctx.fillStyle='#263f3a22';ctx.fillRect(0,0,W,H);}
+  drawTrenches();
+  for(const c of mission.craters)drawCrater(c.x,c.y,c.r);
+  for(const u of mission.units)drawUnit(u,t);
+  // Shell flight is an abstract warning marker: no real ballistic trajectories.
+  for(const sh of mission.shots){const progress=clamp(1-sh.ttl/sh.total,0,1);const px=sh.x,py=sh.y;ctx.strokeStyle='#ffe1ab99';ctx.lineWidth=2;ctx.setLineDash([6,7]);ctx.beginPath();ctx.arc(px,py,12+progress*8,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='#f7d28e';ctx.fillRect(px-2,py-2,4,4);}
+  for(const e of mission.effects){const progress=1-e.life/e.max;const r=e.radius*(0.45+progress*.55);
+    if(e.kind==='smoke'){const cloudCount=18;for(let i=0;i<cloudCount;i++){const angle=i*2.4,rad=r*(0.20+hash(i,21)*0.65);const x=e.x+Math.cos(angle)*rad,y=e.y+Math.sin(angle)*rad;ctx.fillStyle=i%2?'#b9c5b2bb':'#d1d0b8a8';const d=18+hash(i,24)*21;ctx.fillRect(Math.round(x-d/2),Math.round(y-d/2),Math.ceil(d),Math.ceil(d));}}
+    else if(e.kind==='flare'){ctx.fillStyle='#e5dba837';ctx.beginPath();ctx.arc(e.x,e.y,r,0,7);ctx.fill();ctx.strokeStyle='#f5e7b0';ctx.strokeRect(e.x-5,e.y-5,10,10);}
+    else{ctx.fillStyle=progress<.35?'#ffe0a7bd':'#423a32a0';ctx.beginPath();ctx.arc(e.x,e.y,r*(progress<.35?.7:1),0,7);ctx.fill();ctx.strokeStyle=progress<.35?'#f6c27d':'#645445';ctx.lineWidth=4;ctx.beginPath();ctx.arc(e.x,e.y,r*progress,0,7);ctx.stroke();ctx.fillStyle='#e9b776';for(let i=0;i<11&&progress<.65;i++){const a=i*2.4,l=(14+hash(i,25)*r)*progress;ctx.fillRect(Math.round(e.x+Math.cos(a)*l),Math.round(e.y+Math.sin(a)*l),5,5);}}
+  }
+  for(const req of mission.requests){if(req.done||req.expired)continue;const pulse=4+Math.sin(t*4)*3;const x=req.x,y=req.y;
+    ctx.strokeStyle=req.id===selectedRequest?'#ffe2a2':'#d3aa70';ctx.lineWidth=2;ctx.strokeRect(x-14-pulse/2,y-14-pulse/2,28+pulse,28+pulse);
+    ctx.beginPath();ctx.moveTo(x-26,y);ctx.lineTo(x-16,y);ctx.moveTo(x+16,y);ctx.lineTo(x+26,y);ctx.moveTo(x,y-26);ctx.lineTo(x,y-16);ctx.moveTo(x,y+16);ctx.lineTo(x,y+26);ctx.stroke();
+    ctx.font='bold 11px monospace';ctx.fillStyle='#ffe5aa';ctx.fillText(SHELLS[req.kind].short,x+22,y-18);
+  }
+  if(target){const {x,y}=target;const wobble=2+Math.sin(t*2)*2;ctx.strokeStyle='#efd59d';ctx.lineWidth=2;ctx.strokeRect(x-11-wobble,y-11-wobble,22+wobble*2,22+wobble*2);ctx.beginPath();ctx.moveTo(x-26,y);ctx.lineTo(x-7,y);ctx.moveTo(x+7,y);ctx.lineTo(x+26,y);ctx.moveTo(x,y-26);ctx.lineTo(x,y-7);ctx.moveTo(x,y+7);ctx.lineTo(x,y+26);ctx.stroke();ctx.font='bold 11px monospace';ctx.fillStyle='#ffe4ad';ctx.fillText(`GRID ${Math.round(x/10)} / ${Math.round(y/10)}`,x+17,y-19);}
+  if(pointer.x>=0 && !target){ctx.strokeStyle='#f1e1ba88';ctx.strokeRect(pointer.x-8,pointer.y-8,16,16);}
+  // Subtle map graticule on top for a tactical-map feel.
+  ctx.strokeStyle='#f0e7d018';ctx.lineWidth=1;for(let x=0;x<W;x+=80){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}for(let y=0;y<H;y+=80){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+  if(mission.paused && phase==='playing'){ctx.fillStyle='#101817ae';ctx.fillRect(0,0,W,H);ctx.textAlign='center';ctx.font='bold 42px Georgia';ctx.fillStyle='#f6ddb1';ctx.fillText('OPERATION PAUSED',W/2,H/2);ctx.textAlign='left';}
+}
+function getAudio(){if(muted)return null;try{audio??=new (window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume();return audio;}catch{return null;}}
+function bleep(freq=440){const a=getAudio();if(!a)return;const o=a.createOscillator(),g=a.createGain();o.type='triangle';o.frequency.setValueAtTime(freq,a.currentTime);g.gain.setValueAtTime(.028,a.currentTime);g.gain.exponentialRampToValueAtTime(.0001,a.currentTime+.09);o.connect(g);g.connect(a.destination);o.start();o.stop(a.currentTime+.1);}
+function sfx(kind){const a=getAudio();if(!a)return;const len=.4,buffer=a.createBuffer(1,Math.ceil(a.sampleRate*len),a.sampleRate),samples=buffer.getChannelData(0);for(let i=0;i<samples.length;i++){const t=i/a.sampleRate; samples[i]=(Math.random()*2-1)*Math.pow(1-t/len,3)*.42;}const src=a.createBufferSource(),gain=a.createGain(),low=a.createBiquadFilter();low.type='lowpass';low.frequency.value=kind==='fire'?230:500;src.buffer=buffer;src.connect(low);low.connect(gain);gain.connect(a.destination);gain.gain.value=.24;src.start();}
+init();
+
+</script>
+</body>
+</html>

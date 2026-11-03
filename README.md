@@ -5,7 +5,7 @@
 ## Play
 
 - **Online (after GitHub Pages is enabled):** `https://gabih6669.github.io/autonomous-game-studio/`
-- **Locally:** Open `index.html` in a modern browser. There are no CDN dependencies, package downloads, or external game assets.
+- **Offline double-click:** Download `PLAY_OFFLINE.html` from this repository (or build `dist/offline.html` with `npm run build`), then open it in your browser. This single file contains the complete game. No installation, Replit account, CDN, or external game assets are needed.
 - **Development server:** `npm start` then open `http://localhost:4173`.
 
 ## Controls
@@ -46,7 +46,7 @@ npm run build
 npm start
 ```
 
-The build creates `dist/`. Tests use Node's built-in test runner. GitHub Actions validates the game on push and pull request. A second workflow deploys the static build via **GitHub Pages** once Pages has been enabled in repository settings.
+The build creates `dist/` including a standalone `offline.html` for double-click play. Tests use Node's built-in test runner. GitHub Actions validates the game on push and pull request. A second workflow deploys the static build via **GitHub Pages** once Pages has been enabled in repository settings.
 
 ## GitHub Pages setup
 
@@ -62,6 +62,7 @@ The build creates `dist/`. Tests use Node's built-in test runner. GitHub Actions
 - `src/sim.js` — pure rules for battle, AI, shells, requests, upgrades, campaign
 - `src/main.js` — canvas pixel rendering, inputs, audio, persistence and UI
 - `assets/crest.svg` — original pixel-style game insignia
+- `PLAY_OFFLINE.html` — complete one-file playable edition (generated artifact)
 - `tests/sim.test.js` — simulation/unit tests
 - `tools/build.mjs` — zero-dependency production bundling
 - `tools/serve.mjs` — optional local server
