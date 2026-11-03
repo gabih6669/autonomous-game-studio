@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0f1717" />
+  <meta name="description" content="The Last Light — a fictional top-down artillery command game of trench warfare, radio calls, and uncertain victories." />
+  <title>The Last Light | Artillery Command</title>
+  <link rel="icon" href="assets/crest.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">✦</span><div><div class="eyebrow">FIELD COMMAND · 1917 / FICTIONAL THEATER</div><h1>THE LAST <em>LIGHT</em></h1></div></div>
+      <div class="top-meta"><span class="live-dot"></span><span id="sectorLabel">BLACK COPPICE</span><span class="meta-divider"></span><span>CAMPAIGN DAY <b id="dayLabel">01</b></span><button id="soundBtn" class="small ghost" title="Toggle sound" aria-label="Toggle sound">♫ ON</button></div>
+    </header>
+    <div class="statusbar">
+      <div class="status-stat"><span class="stat-label">MISSION TIME</span><strong id="timeLabel">02:12</strong></div>
+      <div class="status-stat"><span class="stat-label">ALLIED MORALE</span><strong id="allyLabel">78%</strong><div class="thin-meter"><span id="allyFill" class="ally-fill" style="width:78%"></span></div></div>
+      <div class="status-stat"><span class="stat-label">ENEMY MORALE</span><strong id="enemyLabel">80%</strong><div class="thin-meter"><span id="enemyFill" class="enemy-fill" style="width:80%"></span></div></div>
+      <div class="status-stat"><span class="stat-label">FRONTLINE</span><strong id="frontLabel">CONTESTED</strong></div>
+      <div class="status-stat"><span class="stat-label">CONDITIONS</span><strong id="weatherLabel">—</strong></div>
+      <button id="pauseBtn" class="small outline">Ⅱ PAUSE</button>
+      <button id="speedBtn" class="small outline" title="Cycle simulation speed">1× SPEED</button>
+    </div>
+    <main class="warroom">
+      <aside class="panel panel-left">
+        <div class="panel-heading"><div><div class="eyebrow">SIGNAL OFFICE</div><h2>FRONTLINE RADIO</h2></div><span class="signal-icon">◉</span></div>
+        <div class="panel-note">Select a signal to mark its requested target. Answer with the matching shell type before the call expires.</div>
+        <div id="requests" class="request-stack"><div class="empty-state">No urgent calls on the line.</div></div>
+        <div class="panel-heading feed-heading"><div><div class="eyebrow">LIVE TRAFFIC</div><h2>DISPATCH LOG</h2></div></div>
+        <div id="radioLog" class="log-stack" aria-live="polite"></div>
+        <div class="legend-card"><div class="eyebrow">MAP LEGEND</div><div class="legend-grid"><span><i class="legend-swatch ally"></i> Allied units</span><span><i class="legend-swatch enemy"></i> Enemy units</span><span><i class="legend-swatch smoke"></i> Smoke screen</span><span><i class="legend-swatch target"></i> Fire request</span></div></div>
+      </aside>
+      <section class="battle-column">
+        <div class="field-heading"><div><span class="eyebrow">TACTICAL OVERVIEW</span><h2>SECTOR <span id="fieldSector">BLACK COPPICE</span></h2></div><div class="field-controls"><span class="field-live"><i></i> LIVE FEED</span><span class="coord-label" id="coordLabel">GRID — / —</span></div></div>
+        <div class="map-frame"><canvas id="battlefield" width="960" height="600" aria-label="Top-down battlefield. Click to designate an artillery target."></canvas><div class="map-overlay-top"><span>◈ WESTERN APPROACH</span><span>◈ ENEMY LINE</span></div><div class="map-compass">N <span>↑</span></div><div class="map-corner">MAP 07C / 1:2500</div></div>
+        <div class="map-toolbar"><div><span class="target-dot">✛</span> <b>DESIGNATED TARGET</b> <span id="targetLabel">CLICK THE MAP</span></div><div><span class="kbd">CLICK</span> PLACE MARKER <span class="kbd">SPACE</span> FIRE</div></div>
+        <div class="mission-bottom"><div class="mission-brief"><div class="eyebrow">ORDERS FROM HEADQUARTERS</div><p>Hold the line. Support autonomous allied infantry. A victory is never guaranteed by artillery alone.</p></div><div class="casualty-counter"><span>ALLIED STRENGTH <b id="aliveAllies">15 / 15</b></span><span>ENEMY SIGHTINGS <b id="aliveEnemies">—</b></span></div></div>
+      </section>
+      <aside class="panel panel-right">
+        <div class="panel-heading"><div><div class="eyebrow">BATTERY COMMAND</div><h2>FIRE CONTROL</h2></div><span class="brass-stamp">⚙</span></div>
+        <div class="section-label">01 / SELECT FIELD GUN</div><div id="guns" class="gun-grid"></div>
+        <div class="section-label">02 / SELECT AMMUNITION</div><div id="shells" class="shell-stack"></div>
+        <div class="section-label">03 / CONFIRM FIRING SOLUTION</div>
+        <div class="fire-solution"><div><span>COORDINATES</span><b id="fireCoords">UNMARKED</b></div><div><span>BATTERY STATUS</span><b id="gunStatus">READY</b></div></div>
+        <button id="fireBtn" class="fire-button" disabled><span>✹</span> FIRE BATTERY <small>[ SPACE ]</small></button>
+        <div id="fireFeedback" class="fire-feedback">Designate a target on the tactical map.</div>
+        <div class="quick-keys"><span><b>1–4</b> SELECT GUN</span><span><b>Q / W / E / R</b> SHELL TYPE</span></div>
+        <div class="battery-note"><span>FIELD ADVISORY</span><p>Blast effects can endanger nearby allies. Smoke helps an advance; illumination improves observation.</p></div>
+      </aside>
+    </main>
+    <section class="campaign-panel">
+      <div class="campaign-heading"><div><div class="eyebrow">OPERATIONAL THEATER</div><h2>THE CAMPAIGN</h2></div><div class="campaign-metrics"><span>VICTORIES <b id="victories">0</b></span><span>DEFEATS <b id="defeats">0</b></span><span>REQUISITION <b id="credits">130 RP</b></span></div></div>
+      <div id="campaignMap" class="campaign-map" aria-label="Campaign sector map"></div>
+      <div class="upgrades-head"><div><div class="eyebrow">FIELD REQUISITIONS</div><h2>BATTERY IMPROVEMENTS</h2></div><span>UPGRADES AVAILABLE BETWEEN OPERATIONS</span></div>
+      <div id="upgrades" class="upgrade-grid"></div>
+      <div class="save-row"><span id="saveStatus">◉ AUTO-SAVE ENABLED</span><div><button class="small outline" id="saveBtn">SAVE CAMPAIGN</button><button class="small outline" id="resetBtn">NEW CAMPAIGN</button></div></div>
+    </section>
+    <footer>THE LAST LIGHT <span>—</span> A FICTIONAL TRENCH-WAR STRATEGY GAME <span>·</span> BUILD 1.0 <span>·</span> ALL COMBAT VALUES ARE ABSTRACT GAME RULES</footer>
+  </div>
+  <div id="overlay" class="overlay open" role="dialog" aria-modal="true" aria-labelledby="overlayTitle">
+    <div class="overlay-card"><div class="eyebrow" id="overlayEyebrow">WAR OFFICE / OPERATIONS</div><div class="overlay-ornament">✦</div><h2 id="overlayTitle">THE LAST LIGHT</h2><p id="overlaySubtitle">A war fought one sector at a time.</p><div id="overlayBody"></div><button id="overlayAction" class="fire-button overlay-action">BEGIN OPERATION →</button><div class="overlay-foot" id="overlayFoot">FICTIONAL WORLD · TACTICAL DECISIONS · UNCERTAIN OUTCOMES</div></div>
+  </div>
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

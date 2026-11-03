@@ -1,0 +1,14 @@
+{
+  "name": "the-last-light-artillery",
+  "version": "1.0.0",
+  "description": "Fictional pixel-art WWI-inspired artillery command strategy game",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "node tools/serve.mjs",
+    "test": "node --test tests/*.test.js",
+    "check": "node --check src/sim.js && node --check src/main.js && npm test",
+    "build": "node tools/build.mjs"
+  },
+  "engines": { "node": ">=20" }
+}

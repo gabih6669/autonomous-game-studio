@@ -1,35 +1,69 @@
-# Autonomous Game Studio
+# THE LAST LIGHT
 
-A reusable workspace for developing browser games with Replit and GitHub.
+**A playable, fictional WWI-inspired top-down artillery-command strategy game.** Fight across seven contested sectors. You command the battery; your allied infantry acts independently. Winning is never guaranteed.
 
-## Project status
+## Play
 
-- GitHub repository: this repository (private).
-- Replit workspace: https://replit.com/@haggergabriel/RedundantSlowFacts
-- The Replit workspace and this GitHub repository are **not yet confirmed to be synchronized**. Connect the repository in Replit's Git/version-control interface, then verify a push appears here.
-- This repository currently contains setup documentation and an automated CI workflow. The playable game source must be imported from Replit.
+- **Online (after GitHub Pages is enabled):** `https://gabih6669.github.io/autonomous-game-studio/`
+- **Locally:** Open `index.html` in a modern browser. There are no CDN dependencies, package downloads, or external game assets.
+- **Development server:** `npm start` then open `http://localhost:4173`.
 
-## Development loop
+## Controls
 
-1. Describe a feature or game concept in ChatGPT.
-2. Have the Replit agent implement it and run relevant checks.
-3. Preview and playtest it in Replit.
-4. Commit and push the code to GitHub.
-5. GitHub Actions runs automated install, test and production build checks on pushes and pull requests, once the application source is present.
-6. Review failures, fix, and repeat.
+| Action | Control |
+|---|---|
+| Mark target | Click/tap battlefield |
+| Choose shell | Q (HE), W (Smoke), E (Airburst), R (Illumination) |
+| Select gun | 1–4 |
+| Fire | Space or **FIRE BATTERY** |
+| Pause/resume | P or Pause button |
+| Accelerate battle | Speed button cycles 1x / 2x / 3x |
+| Respond to radio call | Select a request in the left panel, then fire |
 
-## Game starter expectations
+The coordinates and effects are abstract fictional game mechanics, **not real-world artillery calculations**.
 
-A responsive 2D browser game with keyboard/touch controls, pause, restart, scoring, settings, modular gameplay logic, and testable components. Prefer locally generated or properly licensed assets.
+## Features
 
-## Connecting the Replit app
+- Live top-down pixel-style trench battlefield, with procedurally drawn textures, infantry, craters, trenches, ruins, and smoke.
+- Autonomous allied and enemy infantry, morale, variable combat strength, enemy counterfire, fluctuating frontline.
+- Four shell types: high explosive, smoke, airburst, and illumination, each with distinct roles, ammunition and effects.
+- Radio requests with deadlines and scoring; you can also choose your own targets.
+- Multiple selectable guns, reloads, and ammunition logistics.
+- Seven-sector campaign front map; results adjust territorial control and may shift the active sector.
+- Five upgrade tracks: field guns, heavy shells, forward observers, veteran crews, supply train.
+- After-action reports with performance metrics, allied initiative, and tactical feedback.
+- Automatic/local save and resume; optional manual save and new campaign.
+- Generated sound effects through the browser Audio API; mute button.
+- Responsive interface and touch-targeting support.
 
-Open the Replit project above, open its Git/version-control panel, and follow its workflow to connect to `gabih6669/autonomous-game-studio`. If it prompts about importing an existing repository or conflicts because this repository now has a README and CI workflow, preserve the Replit project source and merge histories carefully rather than overwriting source files.
+## Development
 
-## CI scripts
+No third-party runtime or npm packages are needed.
 
-The CI workflow installs dependencies and runs `npm test` (if defined) and `npm run build` (if defined). It will report when the repository does not yet have a `package.json`, rather than claiming that an empty repository was tested.
+```
+npm test
+npm run build
+npm start
+```
 
-## Security
+The build creates `dist/`. Tests use Node's built-in test runner. GitHub Actions validates the game on push and pull request. A second workflow deploys the static build via **GitHub Pages** once Pages has been enabled in repository settings.
 
-Do not commit credentials, API keys, secret tokens, or private configuration. Use project secrets/environment variables for sensitive values.
+## GitHub Pages setup
+
+1. Open **Settings → Pages** in the repository.
+2. Under **Build and deployment**, set **Source** to **GitHub Actions**.
+3. Open **Actions → Publish browser game to GitHub Pages** to see deployment results.
+4. If Pages isn't available for a **private repository** under your plan, either change repository visibility to public *after reviewing its contents* or use a plan that supports private-repo Pages. Do not expose private repository contents without intending to do so.
+
+## Files
+
+- `index.html` — complete accessible layout and HUD
+- `style.css` — responsive war-room theme
+- `src/sim.js` — pure rules for battle, AI, shells, requests, upgrades, campaign
+- `src/main.js` — canvas pixel rendering, inputs, audio, persistence and UI
+- `assets/crest.svg` — original pixel-style game insignia
+- `tests/sim.test.js` — simulation/unit tests
+- `tools/build.mjs` — zero-dependency production bundling
+- `tools/serve.mjs` — optional local server
+
+This project is not synchronized with any Replit project; GitHub is the canonical source of truth for this game. All fictional teams and locations are original to the game. Art is procedurally generated using canvas primitives and SVG.
